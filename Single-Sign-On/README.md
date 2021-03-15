@@ -1,6 +1,13 @@
 # Single-Sign-On
 
+first, copy environment file template and fill in the required fields:
+
+```
+cp config/vars.env config/.env
+```
+
 ## Set-Up the Repository
+
 ```
 $ cd Single-Sign-On/
 $ python3 -m venv venv
@@ -10,37 +17,23 @@ $ source venv/bin/activate
 
 ## Set Environment Variables
 
-#### Superuser Password
-```
-VIGA_HOST_PASSWORD="..."
-```
-#### Database Configuration
-```
-USE_FILE_BASED_DB=1
-```
-**OR**
-```
-DATABASE_NAME="..."
-DATABASE_USERNAME="..."
-DATABASE_PASSWORD="..."
-DATABASE_HOST="..."
-DATABASE_PORT="..."
-```
-
 ### Apply Migrations
+
 ```
-$ source venv/bin/activate
-(venv)$ cd src/
+(venv)$ export $(grep -v '^#' .env | xargs)
 (venv)$ python manage.py migrate
 ```
 
 ### Create the Admin
+
 ```
+(venv)$ export $(grep -v '^#' .env | xargs)
 (venv)$ cd src/
-(venv)$ python manage.py viga_setup
+(venv)$ python manage.py admin_setup
 ```
 
 ## Running-Up Server
+
 ```
 $ source venv/bin/activate
 (venv)$ cd src/

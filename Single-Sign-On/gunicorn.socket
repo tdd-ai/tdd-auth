@@ -1,14 +1,8 @@
 [Unit]
-Description=SSO server daemon
-After=network.target
-Requires=gunicorn.socket
+Description=gunicorn socket
 
-[Service]
-User=ubuntu
-Group=www-data
-WorkingDirectory=/home/ubuntu/tdd-auth/Single-Sign-On/src/
-ExecStart=/home/ubuntu/tdd-auth/Single-Sign-On/env/bin/gunicorn --access-logfile - --workers 3 --bind unix:/run/gunicorn.sock sso_server.wsgi:application
-EnvironmentFile=/home/ubuntu/tdd-auth/Single-Sign-On/.env
+[Socket]
+ListenStream=/run/gunicorn.sock
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=sockets.target
