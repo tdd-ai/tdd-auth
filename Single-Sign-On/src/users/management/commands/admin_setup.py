@@ -2,7 +2,6 @@ import os
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
-#from users.models import email_superuser
 
 SSO_HOST_EMAIL = os.environ.get('SSO_HOST_EMAIL')
 if not SSO_HOST_EMAIL:
@@ -32,4 +31,3 @@ class Command(BaseCommand):
                                           password=SSO_HOST_PASSWORD,
                                           phone_number="+919999999999")
             print('Super-User Created!')
-        print('SSO Admin Set-Up Complete!')
