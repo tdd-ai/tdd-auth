@@ -26,3 +26,4 @@ sqlparse==0.3.1
 urllib3==1.25.10
 zipp==3.2.0
 six==1.15.0
+django-utils-six==2.0

@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ["*"]
 STATIC_ROOT = BASE_DIR / "static/"
 
 # Email setting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', None)
 EMAIL_HOST = os.getenv('EMAIL_HOST', None)
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', None)

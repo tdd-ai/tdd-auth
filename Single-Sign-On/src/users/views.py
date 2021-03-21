@@ -4,6 +4,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.conf import settings
 
 from rest_framework import status
 from rest_framework.generics import (RetrieveUpdateDestroyAPIView, ListAPIView,
@@ -99,7 +100,7 @@ class UserSignUpView(APIView):
                     })
 
             to_email = serializer_data["email"]
-            send_mail(mail_subject, message, 'no-reply@tdd.ai', [to_email])
+            send_mail(mail_subject, message, settings.EMAIL_HOST_USER, [to_email])
 
             return Response('Please confirm your email address to complete the registration', status=status.HTTP_201_CREATED)
 
