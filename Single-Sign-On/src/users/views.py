@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.http import HttpResponse
 
 from rest_framework import status
 from rest_framework.generics import (RetrieveUpdateDestroyAPIView, ListAPIView,
@@ -118,6 +119,6 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return Response('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
-        return Response('Activation link is invalid!')
+        return HttpResponse('Activation link is invalid!')

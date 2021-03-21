@@ -131,7 +131,7 @@ if (not os.path.exists(JWT_PRIVATE_KEY_PATH)) or (not os.path.exists(JWT_PUBLIC_
 # Visit this page to see all the registered JWT claims:
 # https://tools.ietf.org/html/rfc7519#section-4.1
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # "exp" (Expiration Time) Claim
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # "exp" (Expiration Time) Claim
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # "exp" (Expiration Time) Claim
 
     'ALGORITHM': 'RS256',  # 'alg' (Algorithm Used) specified in header
@@ -182,6 +182,3 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
-# Mail address verification
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
