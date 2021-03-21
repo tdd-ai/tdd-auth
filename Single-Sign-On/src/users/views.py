@@ -1,4 +1,10 @@
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
 from rest_framework import status
 from rest_framework.generics import (RetrieveUpdateDestroyAPIView, ListAPIView,
                                      ListCreateAPIView, RetrieveAPIView)
@@ -12,6 +18,8 @@ from users.permissions import (IsOwner, IsOrganizationAdminOrSSOAdmin,
 from users.serializers import (CreateUserSerializer, UserSerializer,
                                OrganizationSerializer, PublicOrganizationSerializer,
                                PublicUserSerializer)
+
+from .tokens import account_activation_token
 
 User = get_user_model()
 
@@ -73,10 +81,42 @@ class UserSignUpView(APIView):
     def post(self, request, *args, **kwargs):
         serialized = CreateUserSerializer(data=request.data)
         if serialized.is_valid():
+            
             serializer_data = serialized.validated_data
-            User.objects.create_user(**serializer_data)
-            serializer_data = serialized.data
-            serializer_data.pop('password')
-            return Response(serializer_data, status=status.HTTP_201_CREATED)
+
+            user = User.objects.create_user(**serializer_data)
+            user.is_active = False
+            user.save()
+            
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your account at %s' % current_site.domain
+            
+            message = render_to_string('users/email_template.html', {
+                        'user': user,
+                        'domain': current_site.domain,
+                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': account_activation_token.make_token(user),
+                    })
+
+            to_email = serializer_data["email"]
+            send_mail(mail_subject, message, 'no-reply@tdd.ai', [to_email])
+
+            return Response('Please confirm your email address to complete the registration', status=status.HTTP_201_CREATED)
+
         else:
             return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return Response('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return Response('Activation link is invalid!')

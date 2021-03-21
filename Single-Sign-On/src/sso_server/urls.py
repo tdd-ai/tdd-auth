@@ -25,9 +25,9 @@ from .views import favicon_view, ApplicationView
 urlpatterns = [
                 path('', include('users.urls')),
                 path('', include('services.urls')),
+                path('', ApplicationView.as_view()),
                 path('admin/', admin.site.urls),
                 path('favicon.ico', favicon_view),
-                path('', ApplicationView.as_view()),
                 path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
                 path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

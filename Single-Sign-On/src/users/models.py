@@ -32,6 +32,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=30, blank=True, null=True)
     nickname = models.CharField(_('nickname'), max_length=30, blank=True, null=True)
     phone_number = PhoneNumberField()
+
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL,
                                      related_name='users', null=True, blank=True)
     admin_org = models.OneToOneField(Organization, on_delete=models.SET_NULL,
@@ -44,7 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'phone_number']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     class Meta:
         verbose_name = _('user')
