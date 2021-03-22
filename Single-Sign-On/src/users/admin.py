@@ -5,14 +5,14 @@ from users.models import User, Organization
 
 class CustomUserAdmin(UserAdmin):
     ordering = ('id',)
-    list_display = ('id', 'first_name', 'last_name', 'email',
+    list_display = ('id', 'first_name', 'last_name', 'email', 'affiliation',
                     'phone_number', 'is_active', 'is_staff', 'organization', 'admin_org')
     list_display_links = ('id', 'first_name', 'last_name', 'email')
     list_filter = ('is_staff',)
 
     fieldsets = (
         (None, {'fields': ('password', 'email', 'nickname')}),
-        ('Personal info', {'fields': ('avatar', 'first_name', 'last_name', 'phone_number')}),
+        ('Personal info', {'fields': ('avatar', 'first_name', 'last_name', 'affiliation', 'phone_number')}),
         ('Organization Details', {'fields': ('organization', 'admin_org')}),
         ('User Details', {'fields': ('is_active', 'is_staff', 'groups')}),
     )
@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name',
+            'fields': ('email', 'first_name', 'last_name', 'affiliation',
                        'phone_number', 'password1', 'password2'),
         }),
     )

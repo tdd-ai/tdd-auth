@@ -31,6 +31,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30)
     last_name = models.CharField(_('last name'), max_length=30, blank=True, null=True)
     nickname = models.CharField(_('nickname'), max_length=30, blank=True, null=True)
+    affiliation = models.CharField(_('affiliation'), max_length=64, blank=True, null=True)
+
     phone_number = PhoneNumberField()
 
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL,
