@@ -119,6 +119,15 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponse('''
+            <h2>Thank you for your email confirmation. Redirecting...<h2> 	
+            <script>
+                function redirect(){
+                window.location.href = "https://tdd.ai";
+                }
+        
+                setTimeout(redirect, 2000);
+            </script>
+        ''')
     else:
         return HttpResponse('Activation link is invalid!')

@@ -25,7 +25,7 @@ class PublicUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'avatar', 'email', 'nickname', 'affiliation',
-                  'first_name', 'last_name', 'phone_number',)
+                  'first_name', 'last_name',)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'avatar', 'email', 'nickname',
-                  'first_name', 'last_name', 'phone_number', 'affiliation',
+                  'first_name', 'last_name', 'affiliation',
                   'admin_org', 'organization', 'is_sso_admin',)
         read_only_fields = ('admin_org', 'organization',)
 
@@ -47,7 +47,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('avatar', 'email', 'nickname', 'affiliation',
-                  'first_name', 'last_name', 'phone_number', 'password')
+                  'first_name', 'last_name', 'password')
 
     def validate_password(self, value):
         validate_password(value)

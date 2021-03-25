@@ -28,6 +28,5 @@ class Command(BaseCommand):
         if not User.objects.filter(email=SSO_HOST_EMAIL).exists():
             User.objects.create_superuser(first_name="SSO ADMIN",
                                           email=SSO_HOST_EMAIL,
-                                          password=SSO_HOST_PASSWORD,
-                                          phone_number="+919999999999")
+                                          password=SSO_HOST_PASSWORD)
             print('Super-User Created!')

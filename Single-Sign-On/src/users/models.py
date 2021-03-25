@@ -5,7 +5,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from phonenumber_field.modelfields import PhoneNumberField
 from rest_framework.exceptions import APIException
 
 from .managers import CustomUserManager
@@ -32,8 +31,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=30, blank=True, null=True)
     nickname = models.CharField(_('nickname'), max_length=30, blank=True, null=True)
     affiliation = models.CharField(_('affiliation'), max_length=64, blank=True, null=True)
-
-    phone_number = PhoneNumberField()
 
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL,
                                      related_name='users', null=True, blank=True)
