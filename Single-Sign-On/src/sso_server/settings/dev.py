@@ -20,7 +20,5 @@ INTERNAL_IPS = ["localhost", "127.0.0.1"]
 ALLOWED_HOSTS = ["*"]
 
 
-AUTH_PASSWORD_VALIDATORS = []
-
 # Mail address verification
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
