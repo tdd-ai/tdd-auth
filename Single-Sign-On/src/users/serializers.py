@@ -38,8 +38,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'avatar', 'email', 'nickname',
                   'first_name', 'last_name', 'affiliation',
-                  'admin_org', 'organization', 'is_sso_admin',)
-        read_only_fields = ('admin_org', 'organization',)
+                  'admin_org', 'organization', 'is_sso_admin', 'is_staff')
+        read_only_fields = ('admin_org', 'organization', 'is_staff')
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
