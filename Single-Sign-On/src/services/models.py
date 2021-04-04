@@ -3,10 +3,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from rest_framework.exceptions import APIException
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from users.models import Organization
 from users.serializers import UserSerializer
-
 User = get_user_model()
 
 def make_request_to_callback_url(service, user: User = None):
@@ -22,7 +20,6 @@ def make_request_to_callback_url(service, user: User = None):
     headers = {
         'Authorization': f"Bearer {token.access_token}"
     }
-    
     user_data = UserSerializer(user).data
     response = requests.post(service.callback_url, data=user_data, headers=headers)
 
@@ -47,6 +44,12 @@ class Service(models.Model):
             make_request_to_callback_url(self)
         super(Service, self).save(force_insert=force_insert, force_update=force_update,
                                   using=using, update_fields=update_fields)
+
+        for user in User.objects.all():
+            if user.is_superuser:
+                continue
+            connection = Connection(user=user, service=self)
+            connection.save()
 
     @classmethod
     def for_user(cls, user: User):

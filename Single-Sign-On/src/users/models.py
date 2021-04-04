@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework.exceptions import APIException
 
 from .managers import CustomUserManager
+import services.models as services_models
 
 class Organization(models.Model):
 
@@ -68,7 +69,12 @@ class User(AbstractBaseUser, PermissionsMixin):
                     raise APIException(str(f'User is a part of {self.organization}'))
             else:
                 self.organization = self.admin_org
+        created = self._state.adding
         super(User, self).save()
+        if created:
+            for service in services_models.Service.objects.all():
+                connection = services_models.Connection(user=self, service=service)
+                connection.save()
 
 
 class OrganizationJoinRequest(models.Model):
