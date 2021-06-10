@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter as Switch, Route, Link, HashRouter } from "react-router-dom";
+import { Switch, Route, Link, HashRouter } from "react-router-dom";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 
