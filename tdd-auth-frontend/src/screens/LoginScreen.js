@@ -16,14 +16,13 @@ const LoginScreen = () => {
   };
 
   const [response, setResponse] = useState({ result: null, error: null });
+
   const onSubmit = (e) => {
     // TODO: add form validation
     e.preventDefault();
-    console.log(e);
     login(formData)
       .then((r) => {
         console.log(r);
-        console.log(r.statusCode);
         setResponse({ ...response, result: r });
       })
       .catch((e) => setResponse({ ...response, error: e }));
@@ -74,11 +73,11 @@ const LoginScreen = () => {
           ERROR:{" "}
           {(() => {
             let keys = Object.keys(response.error);
-            return response.error[keys[0]];
+            return JSON.stringify(response.error[keys[0]]);
           })()}
         </div>
       )}
-      {response.result && <div>{response.result}</div>}
+      {response.result && <div>Successfull.</div>}
     </div>
   );
 };
