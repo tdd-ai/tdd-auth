@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signUp } from "../services/AuthService";
+import StorageService from "../services/StorageService";
+
 const SignUpScreen = () => {
+  const url = window.location.href;
+  const redir = (/\?redir=([\s\S]*)/.exec(url) || [])[1];
+
+  const [token, setToken] = useState(StorageService.getAccessToken());
+  const [shouldRedirect, setShouldRedirect] = useState(!!token);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,6 +24,11 @@ const SignUpScreen = () => {
       [e.target.name]: e.target.value.trim(),
     });
   };
+
+  useEffect(() => {
+    setShouldRedirect(!!token);
+  }, [token, shouldRedirect]);
+
   const onSubmit = (e) => {
     // TODO: add form validation
     e.preventDefault();
@@ -24,11 +36,16 @@ const SignUpScreen = () => {
     signUp(formData)
       .then((r) => {
         console.log(r);
-        console.log(r.statusCode);
+        setToken(StorageService.getAccessToken());
+        setShouldRedirect(!!token);
         setResponse({ ...response, result: r });
       })
       .catch((e) => setResponse({ ...response, error: e }));
   };
+  if (shouldRedirect && redir) {
+    window.location = `${redir}?token=${token}`;
+    return <div>Redirecting...</div>;
+  }
   return (
     <div>
       {!response.error && !response.result && (
