@@ -71,7 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                 self.organization = self.admin_org
         created = self._state.adding
         super(User, self).save()
-        if created:
+        if created and not self.is_staff:
             for service in services_models.Service.objects.all():
                 connection = services_models.Connection(user=self, service=service)
                 connection.save()

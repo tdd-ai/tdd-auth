@@ -46,7 +46,7 @@ class Service(models.Model):
                                   using=using, update_fields=update_fields)
 
         for user in User.objects.all():
-            if user.is_superuser:
+            if user.is_staff:
                 continue
             connection = Connection(user=user, service=self)
             connection.save()
