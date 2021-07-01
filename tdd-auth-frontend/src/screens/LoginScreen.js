@@ -32,8 +32,7 @@ const LoginScreen = () => {
     e.preventDefault();
     login(formData)
       .then((r) => {
-        console.log(r);
-        setToken(StorageService.getAccessToken());
+        setToken(r.access);
         setShouldRedirect(!!token);
         setResponse({ ...response, result: r });
       })
@@ -42,6 +41,8 @@ const LoginScreen = () => {
   if (shouldRedirect && redir) {
     window.location = `${redir}?token=${token}`;
     return <div>Redirecting...</div>;
+  } else {
+    console.log(shouldRedirect, token, redir);
   }
   return (
     <div>
