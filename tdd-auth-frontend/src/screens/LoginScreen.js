@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { login } from "../services/AuthService";
 
+import { useQuery } from "../hooks";
+
 const LoginScreen = () => {
+  let query = useQuery();
+  const redirectUrl = query.get("redir");
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [response, setResponse] = useState({ result: null, error: null });
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -15,16 +22,21 @@ const LoginScreen = () => {
     });
   };
 
-  const [response, setResponse] = useState({ result: null, error: null });
+  const redirectToUrl = (token) => {
+    setTimeout(() => {
+      window.location.assign(redirectUrl + `#/?token=${token}`);
+    }, 1500);
+  };
+
   const onSubmit = (e) => {
     // TODO: add form validation
     e.preventDefault();
-    console.log(e);
+
     login(formData)
       .then((r) => {
-        console.log(r);
-        console.log(r.statusCode);
         setResponse({ ...response, result: r });
+
+        r?.access && redirectToUrl(r.access);
       })
       .catch((e) => setResponse({ ...response, error: e }));
   };
@@ -78,7 +90,9 @@ const LoginScreen = () => {
           })()}
         </div>
       )}
-      {response.result && <div>{response.result}</div>}
+      {redirectUrl && response.result?.access && (
+        <div>Redirecting to {redirectUrl.split("?")[0]}</div>
+      )}
     </div>
   );
 };
