@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { login } from "../services/AuthService";
 
 import { useQuery } from "../hooks";
+import { useLocation } from "react-router-dom";
 
 const LoginScreen = () => {
   let query = useQuery();
   const redirectUrl = query.get("redir");
+  const { hash } = useLocation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +26,7 @@ const LoginScreen = () => {
 
   const redirectToUrl = (token) => {
     setTimeout(() => {
-      window.location.assign(redirectUrl + `#/?token=${token}`);
+      window.location.assign(redirectUrl + hash + `?token=${token}`);
     }, 1500);
   };
 
