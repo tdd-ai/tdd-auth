@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { login } from "../services/AuthService";
 
 import { useQuery } from "../hooks";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const LoginScreen = () => {
   let query = useQuery();
@@ -69,7 +69,11 @@ const LoginScreen = () => {
               onChange={handleChange}
             />
           </div>
-
+          <div className="form-group">
+            <Link className="label" marginLeft="auto" to={"/forgot-password"}>
+              Forgot your password?
+            </Link>
+          </div>
           <button
             type="submit"
             className={

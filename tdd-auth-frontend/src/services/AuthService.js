@@ -65,3 +65,23 @@ export const login = async ({ email, password }) => {
   let resJson = await result.json();
   throw resJson;
 };
+
+export const forgot_password = async ({email}) => {
+  let result = await fetch(AUTH_ROUTES.FORGOT_PASSWORD, {
+    method: "POST",
+    url: AUTH_ROUTES.FORGOT_PASSWORD,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email
+    }),
+  });
+  let status = result.status;
+  if (status < 400) {
+    let resJson = await result.json();
+    return resJson;
+  }
+  let resJson = await result.json();
+  throw resJson;
+};

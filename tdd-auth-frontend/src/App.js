@@ -1,5 +1,6 @@
 import "./App.css";
 import { Switch, Route, Link, HashRouter } from "react-router-dom";
+import { AUTH_ROUTES } from "./constants/Routes";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 
@@ -35,6 +36,9 @@ function App() {
               <Route exact path="/" component={LoginScreen} />
               <Route path="/login" component={LoginScreen} />
               <Route path="/signup" component={SignUpScreen} />
+              <Route path="/forgot-password" component={() => {
+                window.location.href = AUTH_ROUTES.FORGOT_PASSWORD
+              }} />
             </Switch>
           </div>
         </div>
