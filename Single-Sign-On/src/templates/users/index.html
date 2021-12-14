@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="keywords" content="">
+	<meta name="author" content="Elijah Sears">
+	
+	<title>TDD AUTH</title>
+	
+
+	<!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+    <style>@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800);</style>
+  
+  </head>
+
+  <body>
+    <div id="root">
+      <div class="App">
+        {% block content %}
+
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+
+</html>
