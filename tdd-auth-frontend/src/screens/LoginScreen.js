@@ -24,9 +24,9 @@ const LoginScreen = () => {
     });
   };
 
-  const redirectToUrl = (token) => {
+  const redirectToUrl = (token, first_name, last_name) => {
     setTimeout(() => {
-      window.location.assign(redirectUrl + hash + `?token=${token}`);
+      window.location.assign(redirectUrl + hash + `?token=${token}` + `&first_name=${first_name}` + `&last_name=${last_name}`);
     }, 1500);
   };
 
@@ -38,7 +38,7 @@ const LoginScreen = () => {
       .then((r) => {
         setResponse({ ...response, result: r });
 
-        r?.access && redirectToUrl(r.access);
+        r?.access && redirectToUrl(r.access, r.first_name, r.last_name);
       })
       .catch((e) => setResponse({ ...response, error: e }));
   };

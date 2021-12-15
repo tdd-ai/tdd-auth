@@ -60,6 +60,7 @@ export const login = async ({ email, password }) => {
     let resJson = await result.json();
     StorageService.saveAccessToken(resJson["access"]);
     StorageService.saveRefreshToken(resJson["refresh"]);
+    StorageService.saveFullName(resJson["first_name", "last_name"])
     return resJson;
   }
   let resJson = await result.json();
