@@ -14,9 +14,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         user_services = Service.for_user(user)
         for service in user_services:
             token['aud'].append(service.identifier)
-
         return token
 
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data.update({'email': self.user.email})
+        data.update({'first_name': self.user.first_name})
+        data.update({'last_name': self.user.last_name})
+        return data
 # A JWT access-token example
 #
 # {
