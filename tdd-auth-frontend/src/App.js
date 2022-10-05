@@ -1,8 +1,8 @@
 import "./App.css";
 import { Switch, Route, Link, HashRouter } from "react-router-dom";
 import { AUTH_ROUTES } from "./constants/Routes";
-import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 function App() {
   return (
