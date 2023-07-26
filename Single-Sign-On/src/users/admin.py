@@ -9,6 +9,7 @@ class CustomUserAdmin(UserAdmin):
                     'is_active', 'is_staff', 'organization', 'admin_org')
     list_display_links = ('id', 'first_name', 'last_name', 'email')
     list_filter = ('is_staff',)
+    search_fields = ('email', 'first_name', 'last_name')
 
     fieldsets = (
         (None, {'fields': ('password', 'email', 'nickname')}),
